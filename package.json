@@ -1,7 +1,8 @@
 {
-  "name": "eleventy-duo",
+  "name": "nsimonfr-blog",
   "version": "1.0.0",
   "main": "index.js",
+  "description": "My personal blog about cooking, programming, and other stuff !",
   "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
