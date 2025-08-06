@@ -2,7 +2,7 @@ const { DateTime } = require("luxon");
 const readingTime = require("eleventy-plugin-reading-time");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
-const eleventyPluginCookLang = require("eleventy-plugin-cooklang");
+const eleventyPluginCookLang = require("./plugins/cooklang.js");
 const fs = require("fs");
 const path = require("path");
 
@@ -54,8 +54,9 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("excerpt", (post) => {
+    // This regex removes all HTML tags from the post content by matching anything between '<' and '>'
     const content = post.replace(/(<([^>]+)>)/gi, "");
-    return content.substr(0, content.lastIndexOf(" ", 200)) + "...";
+    return content.substr(0, content.lastIndexOf(" ", 100)) + "...";
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
