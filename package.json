@@ -37,9 +37,7 @@
     "dev:site": "env ELEVENTY_ENV=development eleventy --serve",
     "build:assets": "webpack --mode production",
     "build:site": "env ELEVENTY_ENV=production eleventy",
-    "clean": "rm -rf ./public"
-  },
-  "dependencies": {
-    "remove": "^0.1.5"
+    "clean": "rm -rf ./public",
+    "icloud:push": "node sync-recipes.js"
   }
 }
