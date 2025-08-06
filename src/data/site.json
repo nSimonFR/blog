@@ -1,11 +1,11 @@
 {
-  "name": "Eleventy Duo",
-  "description": "Eleventy Duo is a minimal and beautiful Eleventy theme for personal blogs.",
-  "url": "https://eleventyduo.netlify.app",
+  "name": "nSimonFR's Blog",
+  "description": "My personal blog about cooking, programming, and other stuff _(Most of the recipes will be in French though, sorry)_ !",
+  "url": "https://blog.nsimon.fr",
   "author": {
-    "name": "Author Name",
-    "email": "author@site.com",
-    "twitterHandle": "author_handle"
+    "name": "Nicolas SIMON",
+    "email": "nsimon@nsimon.me",
+    "twitterHandle": "nSimonFR"
   },
   "defaultSocialImage": "/images/default-social-image.png",
   "headerLinks": [
@@ -15,25 +15,25 @@
       "external": false
     },
     {
-      "text": "About",
-      "url": "/about",
+      "text": "Website",
+      "url": "https://nsimon.fr",
       "external": false
     }
   ],
   "socialLinks": [
     {
-      "text": "Instagram",
-      "url": "https://instagram.com/",
+      "text": "Website",
+      "url": "https://nsimon.fr",
       "external": true
     },
     {
       "text": "GitHub",
-      "url": "https://github.com/yinkakun/eleventy-duo",
+      "url": "https://github.com/nSimonFR",
       "external": true
     },
     {
       "text": "Twitter",
-      "url": "https://twitter.com/",
+      "url": "https://twitter.com/nSimonFR",
       "external": true
     }
   ],
