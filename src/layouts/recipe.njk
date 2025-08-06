@@ -5,12 +5,20 @@ pageCss: recipe
 ---
 
 <h1>{{ title | title }}</h1>
+
+
 <div class="tags">
-  {% for tag in recipeTags -%}
-  <!-- <a href="{{ tag }}">#{{ tag }}</a> -->
-  <a href="#">#{{ tag }}</a>
-  {%- if not loop.last %}, {% endif %} {%- endfor %}
+  {% for tag in tags -%}
+  {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+  <a href="{{ tagUrl | url }}">#{{ tag }}</a>
+  {%- endfor %}
 </div>
+
+{% if subtitle %}
+{{ subtitle }}
+
+</br>
+{% endif %}
 
 </br>
 

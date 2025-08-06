@@ -56,7 +56,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("excerpt", (post) => {
     // This regex removes all HTML tags from the post content by matching anything between '<' and '>'
     const content = post.replace(/(<([^>]+)>)/gi, "");
-    return content.substr(0, content.lastIndexOf(" ", 100)) + "...";
+    return content.substr(0, content.lastIndexOf(" ", 150)) + "...";
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
