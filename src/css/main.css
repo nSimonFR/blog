@@ -7,7 +7,6 @@
 @import 'header.css';
 @import 'footer.css';
 @import 'post.css';
-@import 'about.css';
 
 .layout-wrapper {
   display: grid;
