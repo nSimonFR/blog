@@ -2,6 +2,7 @@ const { DateTime } = require("luxon");
 const readingTime = require("eleventy-plugin-reading-time");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const eleventyPluginCookLang = require("eleventy-plugin-cooklang");
 const fs = require("fs");
 const path = require("path");
 
@@ -116,6 +117,26 @@ module.exports = function (eleventyConfig) {
         return !generalTags.includes(tag);
       });
   });
+
+  eleventyConfig.addPlugin(eleventyPluginCookLang);
+
+  eleventyConfig.addFilter("encodeSpaces", function (url) {
+    if (!url) return url;
+    return url.replace(/ /g, "%20");
+  });
+
+  eleventyConfig.addCollection("recipes", function (collectionApi) {
+    return collectionApi
+      .getAll()
+      .filter((i) => i.data.layout === "recipe.njk")
+      .sort((recipeA, recipeB) => recipeA.date - recipeB.date);
+  });
+
+  // eleventyConfig.addCollection("sauces", function (collectionApi) {
+  //   return collectionApi
+  //     .getFilteredByGlob("./Documents/Sauces/*.cook")
+  //     .sort((recipeA, recipeB) => recipeA.date - recipeB.date);
+  // });
 
   return {
     dir: {
