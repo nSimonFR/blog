@@ -23,7 +23,7 @@
 }
 
 .footer__attribution {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
 }
 
 .footer ul {
