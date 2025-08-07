@@ -13,7 +13,7 @@ Use these French tags for .cook recipe files:
 
 ## Optional Tags
 
-- **Cooking**: `four`, `sans-cuisson`, `casserole`
+- **Cooking**: `four`, `sans-cuisson`, `casserole`, `robot`
 - **Diet/Speed**: `végétarien`, `rapide`
 - **Ingredients**: `chocolat`, `fruit`, `fromage`, `crème`, `noix`, `légumes`, `viande`
 - **Eggs**: `œuf`, `jaunes-œuf`, `blancs-œuf`
@@ -29,5 +29,6 @@ Use these French tags for .cook recipe files:
 - `[apéritif, végétarien, légumes, français]`
 - `[dessert, chocolat, four, français]`
 - `[sauce, jaunes-œuf, rapide, français]`
+- `[dessert, chocolat, robot, français]`
 
 Keep tags simple, max 6 per recipe.
