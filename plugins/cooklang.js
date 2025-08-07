@@ -35,9 +35,22 @@ const cookExtension = {
     let cookware = [];
 
     const metadataTags = recipe?.metadata?.tags?.replace(/^\[|\]$/g, "");
-    const tags = metadataTags
-      ? metadataTags.split(",").map((tag) => tag.trim())
+    let tags = metadataTags
+      ? metadataTags.split(",").map((tag) => tag.toLowerCase().trim())
       : [];
+
+    // Auto-add folder-based category tags
+    // Extract folder name from input path
+    const pathParts = inputPath.split("/");
+    const folderName = pathParts[pathParts.length - 2]; // Get parent folder name
+
+    if (folderName) {
+      const categoryTag = folderName.toLowerCase();
+      // Add category tag if not already present
+      if (!tags.includes(categoryTag)) {
+        tags.unshift(categoryTag); // Add at beginning to maintain category-first order
+      }
+    }
 
     function getStepTokenHTML(token) {
       const { quantity, units, name, value, type } = token;
