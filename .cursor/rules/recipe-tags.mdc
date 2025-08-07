@@ -9,7 +9,7 @@ Use these French tags for .cook recipe files:
 ## Required Tags
 
 - **Category**: `apéritif`, `plat`, `dessert`, `sauce` (exactly one)
-- **Language**: `français` (always include)
+- **Language**: `lang:fr` (always include)
 
 ## Optional Tags
 
@@ -21,14 +21,14 @@ Use these French tags for .cook recipe files:
 ## Format
 
 ```
->> tags: [category, ingredient, method, français]
+>> tags: [category, ingredient, method, lang:fr]
 ```
 
 ## Examples
 
-- `[apéritif, végétarien, légumes, français]`
-- `[dessert, chocolat, four, français]`
-- `[sauce, jaunes-œuf, rapide, français]`
-- `[dessert, chocolat, robot, français]`
+- `[apéritif, végétarien, légumes, lang:fr]`
+- `[dessert, chocolat, four, lang:fr]`
+- `[sauce, jaunes-œuf, rapide, lang:fr]`
+- `[dessert, chocolat, robot, lang:fr]`
 
 Keep tags simple, max 6 per recipe.
