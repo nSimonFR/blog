@@ -1,4 +1,7 @@
 {% for tag in collections.tagList %}
-  {% set tagUrl %}/tags/{{ tag }}/{% endset %}
-  <a href="{{ tagUrl | url }}" class="post-tag">#{{ tag }}</a>
+  {# Only show tags that have 2 or more references #}
+  {% if collections[tag] and collections[tag].length >= 2 %}
+    {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+    <a href="{{ tagUrl | url }}" class="post-tag">#{{ tag }}</a>
+  {% endif %}
 {% endfor %}

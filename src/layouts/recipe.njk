@@ -24,9 +24,12 @@ pageCss: recipe
     <h2>Ingredients</h2>
     <ul>
       {% for item in ingredients %}
-        <li>{{ item.quantity }}
-          {{ item.units }}
-          {{ item.name }}</li>
+        {# Skip recipe references (ingredients that start with ./ or ../ and end with .cook) #}
+        {% if not ((item.name.startsWith('./') or item.name.startsWith('../')) and item.name.endsWith('.cook')) %}
+          <li>{{ item.quantity }}
+            {{ item.units }}
+            {{ item.name }}</li>
+        {% endif %}
       {% endfor %}
     </ul>
   </section>

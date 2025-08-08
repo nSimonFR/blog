@@ -6,29 +6,18 @@ alwaysApply: false
 
 Use these French tags for .cook recipe files:
 
-## Required Tags
-
-- **Category**: `apéritif`, `plat`, `dessert`, `sauce` (exactly one)
-- **Language**: `lang:fr` (always include)
-
-## Optional Tags
+## Tags
 
 - **Cooking**: `four`, `sans-cuisson`, `casserole`, `robot`
 - **Diet/Speed**: `végétarien`, `rapide`
 - **Ingredients**: `chocolat`, `fruit`, `fromage`, `crème`, `noix`, `légumes`, `viande`
 - **Eggs**: `œuf`, `jaunes-œuf`, `blancs-œuf`
 
-## Format
-
-```
->> tags: [category, ingredient, method, lang:fr]
-```
-
 ## Examples
 
-- `[apéritif, végétarien, légumes, lang:fr]`
-- `[dessert, chocolat, four, lang:fr]`
-- `[sauce, jaunes-œuf, rapide, lang:fr]`
-- `[dessert, chocolat, robot, lang:fr]`
+- `[végétarien, légumes]`
+- `[chocolat, crème, four]`
+- `[jaunes-œuf, rapide]`
+- `[chocolat, robot]`
 
 Keep tags simple, max 6 per recipe.

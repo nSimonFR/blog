@@ -30,8 +30,11 @@ eleventyComputed:
 {% endfor %}
 <div class="tags">
   {% for tagItem in filteredTags %}
-    {% set tagUrl %}/tags/{{ tagItem }}/{% endset %}
-    <a href="{{ tagUrl | url }}" class="post-tag">#{{ tagItem }}</a>
+    {# Only show tags that have 2 or more references #}
+    {% if collections[tagItem] and collections[tagItem].length >= 2 %}
+      {% set tagUrl %}/tags/{{ tagItem }}/{% endset %}
+      <a href="{{ tagUrl | url }}" class="post-tag">#{{ tagItem }}</a>
+    {% endif %}
   {% endfor %}
 </div>
 <section class="post-list__wrapper">

@@ -27,7 +27,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
-  eleventyConfig.addPlugin(eleventyPluginCookLang);
+  eleventyConfig.addPlugin(eleventyPluginCookLang, { outputHtml: true });
 
   // setup mermaid markdown highlighter
   const highlighter = eleventyConfig.markdownHighlighter;
