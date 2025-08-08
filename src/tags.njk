@@ -16,7 +16,24 @@ eleventyComputed:
   title: "{{ tag | title }}"
   description: "All posts tagged “{{ tag }}”"
 ---
-<h1>{{ tag | title }}</h1>
 
+<h1>{{ tag | title }}</h1>
 {% set postslist = collections[tag] %}
-{% include "posts-list.njk" %}
+{# Create a filtered tag list based on tags used in the current posts #}
+{% set filteredTags = [] %}
+{% for post in postslist %}
+  {% for postTag in post.data.tags %}
+    {% if collections.tagList.indexOf(postTag) != -1 and filteredTags.indexOf(postTag) == -1 %}
+      {% set filteredTags = (filteredTags.push(postTag), filteredTags) %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+<div class="tags">
+  {% for tagItem in filteredTags %}
+    {% set tagUrl %}/tags/{{ tagItem }}/{% endset %}
+    <a href="{{ tagUrl | url }}" class="post-tag">#{{ tagItem }}</a>
+  {% endfor %}
+</div>
+<section class="post-list__wrapper">
+  {% include "posts-list.njk" %}
+</section>
