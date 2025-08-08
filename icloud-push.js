@@ -6,7 +6,7 @@ const os = require("os");
 
 /**
  * Custom sync script to replace rsync functionality
- * Syncs recipes from src/posts/recipes/ to iCloud CookLang app directory
+ * Syncs recipes from recipes folder to iCloud CookLang app directory
  */
 
 const sourceDir = path.join(__dirname, "src", "posts", "recipes");

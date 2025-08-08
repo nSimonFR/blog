@@ -38,6 +38,6 @@
     "build:assets": "webpack --mode production",
     "build:site": "env ELEVENTY_ENV=production eleventy",
     "clean": "rm -rf ./public",
-    "icloud:push": "node sync-recipes.js"
+    "icloud:push": "node icloud-push.js"
   }
 }
