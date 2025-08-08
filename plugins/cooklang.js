@@ -270,6 +270,11 @@ const cookExtension = {
 
     const images = findRecipeImages(inputPath);
 
+    const hasImages = images.main || Object.keys(images.steps).length > 0;
+    if (hasImages && !tags.includes("photo")) {
+      tags.push("photo");
+    }
+
     return {
       recipe,
       steps,
