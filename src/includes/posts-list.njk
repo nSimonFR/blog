@@ -1,15 +1,16 @@
 <ul class="post-list">
   {% for post in postslist | reverse %}
     <li class="post-list__item">
-      <div>
+      <div class="post-list__header">
         <div class="post-list__meta">
           <time datetime="{{ post.date | htmlDateString }}">
             {{ post.date | readableDate }}
           </time>
-          <span> | </span>
+          <span>
+            |
+          </span>
           <span>{{ post | readingTime }} read</span>
         </div>
-
         <div class="post-list__tags">
           {% for tag in post.data.tags %}
             {%- if collections.tagList.indexOf(tag) != -1 -%}
@@ -19,27 +20,33 @@
           {% endfor %}
         </div>
       </div>
-
-      <h3 class="post-list__title">
-        <a  href="{{ post.url }}">{{ post.data.title }}</a>
-      </h3>
-      
-      <p class="post-list__excerpt">
-      {% if post.data.subtitle %}
-        {% if post.data.subtitle.length > 200 %}
-          <i>{{ post.data.subtitle | truncate(200) }}...</i>
-        {% else %}
-          <i>{{ post.data.subtitle }}</i>
-          </br>
-          {{ post.templateContent | excerpt | safe }}
+      <div class="post-list__main">
+        <div class="post-list__content">
+          <h3 class="post-list__title">
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+          </h3>
+          <p class="post-list__excerpt">
+            {% if post.data.subtitle %}
+              {% if post.data.subtitle.length > 200 %}
+                <i>{{ post.data.subtitle | truncate(200) }}...</i>
+              {% else %}
+                <i>{{ post.data.subtitle }}</i>
+              </br>
+              {{ post.templateContent | excerpt | safe }}
+            {% endif %}
+          {% else %}
+            {{ post.templateContent | excerpt | safe }}
+          {% endif %}
+        </p>
+        <a class="post-list__read-more" href="{{ post.url }}">read article</a>
+      </div>
+      {% if post.data.images and post.data.images.main %}
+        <div class="post-list__image">
+          <a href="{{ post.url }}">
+            <img src="{{ post.url }}../{{ post.data.images.main }}" alt="{{ post.data.title }}" loading="lazy"></a>
+          </div>
         {% endif %}
-      {% else %}
-        {{ post.templateContent | excerpt | safe }}
-      {% endif %}
-      </p>
-
-
-      <a class="post-list__read-more" href="{{ post.url }}">read article</a>
+      </div>
     </li>
   {% endfor %}
 </ul>
