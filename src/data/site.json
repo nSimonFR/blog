@@ -1,6 +1,6 @@
 {
   "name": "nSimonFR's Blog",
-  "description": "My personal blog about cooking, programming, and other stuff _(Most of the recipes will be in French though, sorry)_ !",
+  "description": "My personal blog about cooking, programming, and hopefully some other stuff !",
   "url": "https://blog.nsimon.fr",
   "author": {
     "name": "Nicolas SIMON",
@@ -11,7 +11,12 @@
   "headerLinks": [
     {
       "text": "Blog",
-      "url": "/blog",
+      "url": "/tags/blog",
+      "external": false
+    },
+    {
+      "text": "Recipes (🇫🇷)",
+      "url": "/tags/recipes",
       "external": false
     },
     {

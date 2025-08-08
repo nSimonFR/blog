@@ -3,6 +3,6 @@ layout: home
 title: "nSimonFR's Blog"
 ---
 
-# Hello there ^_^
+# Hello there, I'm Nicolas ! ^_^
 
 {{ site.description }}
