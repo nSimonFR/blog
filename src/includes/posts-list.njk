@@ -9,7 +9,25 @@
           <span>
             |
           </span>
-          <span>{{ post | readingTime }} read</span>
+          {% if post.data.recipe and post.data.recipe.metadata %}
+            {% set prepTime = post.data.recipe.metadata["time.prep"] %}
+            {% set cookTime = post.data.recipe.metadata["time.cook"] %}
+            {% if prepTime or cookTime %}
+              <span>
+                {% if prepTime %}
+                  {{ prepTime }} min prep{% endif %}
+                {% if prepTime and cookTime %}
+                  &
+                {% endif %}
+                {% if cookTime %}
+                  {{ cookTime }} min cook{% endif %}
+              </span>
+            {% else %}
+              <span>{{ post | readingTime }} read</span>
+            {% endif %}
+          {% else %}
+            <span>{{ post | readingTime }} read</span>
+          {% endif %}
         </div>
         <div class="post-list__tags">
           {% for tag in post.data.tags %}

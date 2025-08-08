@@ -9,15 +9,33 @@ layout: base.njk
       <time datetime="{{ page.date | htmlDateString }}">
         {{ page.date | readableDate }}
       </time>
-      <span> | </span>
-      <span>{{ content | readingTime }} read</span>
+      <span>
+        |
+      </span>
+      {% if recipe and recipe.metadata %}
+        {% set prepTime = recipe.metadata["time.prep"] %}
+        {% set cookTime = recipe.metadata["time.cook"] %}
+        {% if prepTime or cookTime %}
+          <span>
+            {% if prepTime %}
+              {{ prepTime }} min prep{% endif %}
+            {% if prepTime and cookTime %}
+              +
+            {% endif %}
+            {% if cookTime %}
+              {{ cookTime }} min cook{% endif %}
+          </span>
+        {% else %}
+          <span>{{ content | readingTime }} read</span>
+        {% endif %}
+      {% else %}
+        <span>{{ content | readingTime }} read</span>
+      {% endif %}
     </div>
   </header>
-
   <main class="post__content">
     {{ content | safe }}
   </main>
-
   <aside class="post__aside">
     <div class="post__tags">
       {% for tag in tags | pageTags %}
@@ -25,28 +43,21 @@ layout: base.njk
         <a href="{{ tagUrl | url }}">#{{ tag }}</a>
       {% endfor %}
     </div>
-
     <nav class="post__pagination">
       {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
       {%- if nextPost %}
-
         <a href="{{ nextPost.url | url }}">
           <span>←</span>
           <span>{{ nextPost.data.title }}</span>
         </a>
-
       {% endif %}
-
       {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
       {%- if previousPost %}
-
         <a href="{{ previousPost.url | url }}">
           <span>{{ previousPost.data.title }}</span>
           <span>→</span>
         </a>
-
       {% endif %}
     </nav>
   </aside>
-
 </article>

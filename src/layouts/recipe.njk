@@ -9,6 +9,23 @@ pageCss: recipe
     <img src="../{{ images.main }}" alt="{{ title }}" loading="lazy"></div>
   {% endif %}
   <h1>{{ title | title }}</h1>
+  <div class="recipe-meta">
+    {% if recipe and recipe.metadata %}
+      {% set prepTime = recipe.metadata["time.prep"] %}
+      {% set cookTime = recipe.metadata["time.cook"] %}
+      {% if prepTime or cookTime %}
+        <span class="recipe-time">
+          {% if prepTime %}
+            {{ prepTime }} min prep{% endif %}
+          {% if prepTime and cookTime %}
+            &
+          {% endif %}
+          {% if cookTime %}
+            {{ cookTime }} min cook{% endif %}
+        </span>
+      {% endif %}
+    {% endif %}
+  </div>
   <div class="tags">
     {% for tag in tags -%}
       {% set tagUrl %}/tags/{{ tag }}/{% endset %}
