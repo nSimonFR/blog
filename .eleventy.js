@@ -27,6 +27,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(readingTime);
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(eleventyPluginCookLang);
 
   // setup mermaid markdown highlighter
   const highlighter = eleventyConfig.markdownHighlighter;
@@ -38,7 +39,13 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.setDataDeepMerge(true);
+
   eleventyConfig.addPassthroughCopy({ "src/images": "images" });
+  // Copy recipe images (jpg, jpeg, png) from recipe directories
+  eleventyConfig.addPassthroughCopy("src/posts/recipes/**/*.jpg");
+  eleventyConfig.addPassthroughCopy("src/posts/recipes/**/*.jpeg");
+  eleventyConfig.addPassthroughCopy("src/posts/recipes/**/*.png");
+
   eleventyConfig.setBrowserSyncConfig({ files: [manifestPath] });
 
   eleventyConfig.addShortcode("bundledcss", function () {
@@ -119,25 +126,10 @@ module.exports = function (eleventyConfig) {
       });
   });
 
-  eleventyConfig.addPlugin(eleventyPluginCookLang);
-
   eleventyConfig.addFilter("encodeSpaces", function (url) {
     if (!url) return url;
     return url.replace(/ /g, "%20");
   });
-
-  eleventyConfig.addCollection("recipes", function (collectionApi) {
-    return collectionApi
-      .getAll()
-      .filter((i) => i.data.layout === "recipe.njk")
-      .sort((recipeA, recipeB) => recipeA.date - recipeB.date);
-  });
-
-  // eleventyConfig.addCollection("sauces", function (collectionApi) {
-  //   return collectionApi
-  //     .getFilteredByGlob("./Documents/Sauces/*.cook")
-  //     .sort((recipeA, recipeB) => recipeA.date - recipeB.date);
-  // });
 
   return {
     dir: {

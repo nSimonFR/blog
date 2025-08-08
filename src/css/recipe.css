@@ -1,0 +1,232 @@
+/* Recipe-specific styles */
+
+.recipe-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Recipe title */
+.recipe-page h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 1.5rem 0;
+  text-align: center;
+  color: var(--color-primary, #333);
+  line-height: 1.2;
+}
+
+/* Recipe subtitle */
+.recipe-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 1.5rem 0 2.5rem 0;
+  color: #666;
+  text-align: left;
+}
+
+/* Main recipe image */
+.recipe-main-image {
+  margin: 1.5rem 0 0.5rem 0; /* Further reduced bottom margin for closer spacing to title */
+  text-align: center;
+}
+
+.recipe-main-image img {
+  width: 100%; /* Full width instead of max-width */
+  max-width: 800px; /* Much larger maximum width */
+  height: auto;
+  border-radius: 16px; /* Larger border radius for modern look */
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.2), /* Main shadow */
+    0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle secondary shadow */
+  transform: scale(1); /* Base scale for transition */
+  transition: all 0.3s ease; /* Smooth transitions */
+  border: 2px solid rgba(255, 255, 255, 0.8); /* Subtle white border */
+}
+
+.recipe-main-image img:hover {
+  transform: scale(1.02); /* Slight zoom on hover */
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.25), /* Enhanced shadow on hover */
+    0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Recipe sections */
+.recipe-ingredients,
+.recipe-cookware,
+.recipe-instructions {
+  margin: 5rem 0; /* Further increased spacing between sections */
+}
+
+/* Tags styling - add some spacing */
+.tags {
+  margin: 2rem 0;
+}
+
+.recipe-ingredients h2,
+.recipe-cookware h2,
+.recipe-instructions h2 {
+  color: var(--color-primary, #333);
+  border-bottom: 2px solid var(--color-accent, #007acc);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.recipe-ingredients ul,
+.recipe-cookware ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recipe-ingredients li,
+.recipe-cookware li {
+  padding: 0.75rem 0; /* Increased padding for more spacing between items */
+  border-bottom: 1px solid #eee;
+}
+
+.recipe-ingredients li:last-child,
+.recipe-cookware li:last-child {
+  border-bottom: none;
+}
+
+/* Recipe steps */
+.recipe-instructions ol {
+  list-style: none;
+  counter-reset: step-counter;
+  padding: 0;
+}
+
+.recipe-step {
+  counter-increment: step-counter;
+  margin: 2.5rem 0; /* Increased margin between recipe steps */
+  padding: 2rem; /* Increased internal padding */
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid var(--color-accent, #007acc);
+  position: relative;
+}
+
+.recipe-step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: -2px;
+  top: -10px;
+  background: var(--color-accent, #007acc);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.recipe-step-content {
+  margin-bottom: 1.5rem; /* Increased spacing below step content */
+  line-height: 1.7; /* Slightly increased line height for better readability */
+}
+
+/* Step images */
+.recipe-step-image {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.recipe-step-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Recipe component styling (for ingredients, cookware, timers) */
+.recipe--ingredient {
+  background-color: #e8f5e8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #2d5a2d;
+}
+
+.recipe--cookware {
+  background-color: #fff3cd;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #856404;
+}
+
+.recipe--timer {
+  background-color: #d1ecf1;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #0c5460;
+}
+
+/* Tags styling */
+.tags {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tags a {
+  background: var(--color-accent, #007acc);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
+}
+
+.tags a:hover {
+  background: var(--color-accent-dark, #005a99);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .recipe-page {
+    padding: 1rem;
+  }
+  
+  .recipe-page h1 {
+    font-size: 2.2rem;
+  }
+  
+  .recipe-ingredients,
+  .recipe-cookware,
+  .recipe-instructions {
+    margin: 2rem 0;
+  }
+  
+  .recipe-step {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  .recipe-step::before {
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .recipe-page h1 {
+    font-size: 1.8rem;
+  }
+  
+  .recipe-main-image img,
+  .recipe-step-image img {
+    border-radius: 4px;
+  }
+  
+  .recipe-step {
+    padding: 0.75rem;
+  }
+}

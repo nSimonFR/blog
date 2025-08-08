@@ -10,6 +10,7 @@
 
 const { Recipe } = require("@cooklang/cooklang-ts");
 const fs = require("fs");
+const path = require("path");
 
 const frontmatterRegex = /^(\-\-\-\n)(.*\n)*(\-\-\-)$/gm;
 let config = {};
@@ -19,6 +20,51 @@ module.exports = function (eleventyConfig, userConfig = {}) {
   eleventyConfig.addTemplateFormats("cook");
   eleventyConfig.addExtension("cook", cookExtension);
 };
+
+function findRecipeImages(inputPath) {
+  const dir = path.dirname(inputPath);
+  const baseName = path.basename(inputPath, ".cook");
+  const images = {
+    main: null,
+    steps: {},
+  };
+
+  // Supported image extensions
+  const imageExtensions = [".jpg", ".jpeg", ".png"];
+
+  try {
+    const files = fs.readdirSync(dir);
+
+    for (const file of files) {
+      const ext = path.extname(file).toLowerCase();
+      if (!imageExtensions.includes(ext)) continue;
+
+      const fileBaseName = path.basename(file, ext);
+
+      // Check for main recipe image (exact match)
+      if (fileBaseName === baseName) {
+        images.main = file;
+        continue;
+      }
+
+      // Check for step-specific images (baseName.stepNumber.ext)
+      const stepMatch = fileBaseName.match(
+        new RegExp(
+          `^${baseName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\.(\\d+)$`
+        )
+      );
+      if (stepMatch) {
+        const stepNumber = parseInt(stepMatch[1]);
+        images.steps[stepNumber] = file;
+      }
+    }
+  } catch (error) {
+    // Directory read error, return empty images object
+    console.warn(`Could not read directory for images: ${dir}`, error.message);
+  }
+
+  return images;
+}
 
 const cookExtension = {
   getData: async function (inputPath) {
@@ -101,6 +147,8 @@ const cookExtension = {
 
     const subtitle = recipe.metadata?.introduction;
 
+    const images = findRecipeImages(inputPath);
+
     return {
       recipe,
       steps,
@@ -108,6 +156,7 @@ const cookExtension = {
       cookware,
       title,
       subtitle,
+      images,
       tags,
     };
   },

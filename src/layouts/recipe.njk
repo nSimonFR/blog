@@ -4,57 +4,55 @@ mainClass: recipe-page
 pageCss: recipe
 ---
 
-<h1>{{ title | title }}</h1>
-
-
-<div class="tags">
-  {% for tag in tags -%}
-  {% set tagUrl %}/tags/{{ tag }}/{% endset %}
-  <a href="{{ tagUrl | url }}">#{{ tag }}</a>
-  {%- endfor %}
-</div>
-
-{% if subtitle %}
-{{ subtitle }}
-
-</br>
-{% endif %}
-
-</br>
-
-<section class="recipe-ingredients">
-  <h2>Ingredients:</h2>
-  <ul>
-    {% for item in ingredients %}
-    <li>{{ item.quantity }} {{ item.units }} {{ item.name }}</li>
-    {% endfor %}
-  </ul>
-</section>
-
-</br>
-
-<section class="recipe-cookware">
-  <h2>Cookware:</h2>
-  <ul>
-    {% for item in cookware %}
-    <li>
-      {{ item.name }}
-    </li>
-    {% endfor %}
-  </ul>
-</section>
-
-</br>
-
-<section class="recipe-instructions">
-  <h2>Instructions</h2>
-  <ul>
-    {% for step in steps %}
-    <li>
-      {%- for item in step -%}
-      {{ item | safe }}
-      {%- endfor -%}
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+{% if images.main %}
+  <div class="recipe-main-image">
+    <img src="../{{ images.main }}" alt="{{ title }}" loading="lazy"></div>
+  {% endif %}
+  <h1>{{ title | title }}</h1>
+  <div class="tags">
+    {% for tag in tags -%}
+      {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+      <a href="{{ tagUrl | url }}">#{{ tag }}</a>
+    {%- endfor %}
+  </div>
+  {% if subtitle %}
+    <div class="recipe-subtitle">
+      {{ subtitle }}
+    </div>
+  {% endif %}
+  <section class="recipe-ingredients">
+    <h2>Ingredients</h2>
+    <ul>
+      {% for item in ingredients %}
+        <li>{{ item.quantity }}
+          {{ item.units }}
+          {{ item.name }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="recipe-cookware">
+    <h2>Cookware</h2>
+    <ul>
+      {% for item in cookware %}
+        <li>{{ item.name }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="recipe-instructions">
+    <h2>Instructions</h2>
+    <ol>
+      {% for step in steps %}
+        <li class="recipe-step">
+          <div class="recipe-step-content">
+            {%- for item in step -%}
+              {{ item | safe }}
+            {%- endfor -%}
+          </div>
+          {% if images.steps[loop.index] %}
+            <div class="recipe-step-image">
+              <img src="../{{ images.steps[loop.index] }}" alt="Step {{ loop.index }}" loading="lazy"></div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
