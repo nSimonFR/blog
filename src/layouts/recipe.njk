@@ -17,19 +17,19 @@ pageCss: recipe
     {% if prepTime or cookTime %}
       <span class="recipe-time">
         {% if prepTime %}
-          {{ prepTime }} min prep{% endif %}
+          {{ prepTime }} min de préparation{% endif %}
         {% if prepTime and cookTime %}
           &
         {% endif %}
         {% if cookTime %}
-          {{ cookTime }} min cook{% endif %}
+          {{ cookTime }} min de cuisson{% endif %}
       </span>
     {% endif %}
   {% endif %}
   <div class="recipe-actions">
     {% set cookFilePath = page.inputPath | replace("./src/", "") | replace("src/", "") %}
     <a href="/{{ cookFilePath }}" download="{{ title | slugify }}.cook" class="download-button">
-      Download .cook file
+      Télécharger le .cook
     </a>
   </div>
 </div>
@@ -46,7 +46,7 @@ pageCss: recipe
 {% endif %}
 <div class="recipe-columns">
   <section class="recipe-ingredients">
-    <h2>Ingredients</h2>
+    <h2>Ingrédients</h2>
     <ul>
       {% for item in ingredients %}
         {# Skip recipe references (ingredients that start with ./ or ../ and end with .cook) #}
@@ -59,7 +59,7 @@ pageCss: recipe
     </ul>
   </section>
   <section class="recipe-cookware">
-    <h2>Cookware</h2>
+    <h2>Ustensiles</h2>
     <ul>
       {% for item in cookware %}
         <li>{{ item.name }}</li>
@@ -68,7 +68,7 @@ pageCss: recipe
   </section>
 </div>
 <section class="recipe-instructions">
-  <h2>Instructions</h2>
+  <h2>Étapes</h2>
   <ol>
     {% for step in steps %}
       <li class="recipe-step">
