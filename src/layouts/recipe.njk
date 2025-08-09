@@ -44,27 +44,29 @@ pageCss: recipe
     {{ subtitle }}
   </div>
 {% endif %}
-<section class="recipe-ingredients">
-  <h2>Ingredients</h2>
-  <ul>
-    {% for item in ingredients %}
-      {# Skip recipe references (ingredients that start with ./ or ../ and end with .cook) #}
-      {% if not ((item.name.startsWith('./') or item.name.startsWith('../')) and item.name.endsWith('.cook')) %}
-        <li>{{ item.quantity }}
-          {{ item.units }}
-          {{ item.name }}</li>
-      {% endif %}
-    {% endfor %}
-  </ul>
-</section>
-<section class="recipe-cookware">
-  <h2>Cookware</h2>
-  <ul>
-    {% for item in cookware %}
-      <li>{{ item.name }}</li>
-    {% endfor %}
-  </ul>
-</section>
+<div class="recipe-columns">
+  <section class="recipe-ingredients">
+    <h2>Ingredients</h2>
+    <ul>
+      {% for item in ingredients %}
+        {# Skip recipe references (ingredients that start with ./ or ../ and end with .cook) #}
+        {% if not ((item.name.startsWith('./') or item.name.startsWith('../')) and item.name.endsWith('.cook')) %}
+          <li>{{ item.quantity }}
+            {{ item.units }}
+            {{ item.name }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="recipe-cookware">
+    <h2>Cookware</h2>
+    <ul>
+      {% for item in cookware %}
+        <li>{{ item.name }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
 <section class="recipe-instructions">
   <h2>Instructions</h2>
   <ol>

@@ -77,6 +77,26 @@
   margin: 1rem 0;
 }
 
+/* Tighter typography for ingredients and cookware */
+.recipe-ingredients,
+.recipe-cookware {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Two-column layout for ingredients and cookware */
+.recipe-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.recipe-columns .recipe-ingredients,
+.recipe-columns .recipe-cookware {
+  margin: 0; /* Remove outer margins inside the grid */
+}
+
 /* Tags styling - add some spacing */
 .tags {
   margin: 2rem 0;
@@ -99,7 +119,7 @@
 
 .recipe-ingredients li,
 .recipe-cookware li {
-  padding: 0.75rem 0; /* Increased padding for more spacing between items */
+  padding: 0.4rem 0; /* Tighter spacing between items */
   border-bottom: 1px solid #eee;
 }
 
@@ -215,6 +235,12 @@
   /* Keep right alignment while allowing wrap on small screens */
   .recipe-time {
     margin-left: auto;
+  }
+
+  /* Stack ingredients and cookware on small screens */
+  .recipe-columns {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 }
 
