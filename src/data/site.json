@@ -1,13 +1,12 @@
 {
-  "name": "nSimonFR's Blog",
-  "description": "My personal blog about cooking, programming, and hopefully some other stuff !",
+  "name": "nSimon Blog",
   "url": "https://blog.nsimon.fr",
+  "description": "My personal blog about cooking, programming, and hopefully some other stuff !",
   "author": {
     "name": "Nicolas SIMON",
     "email": "nsimon@nsimon.me",
     "twitterHandle": "nSimonFR"
   },
-  "defaultSocialImage": "/images/default-social-image.png",
   "headerLinks": [
     {
       "text": "Blog",
