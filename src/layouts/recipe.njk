@@ -6,73 +6,81 @@ pageCss: recipe
 
 {% if images.main %}
   <div class="recipe-main-image">
-    <img src="../{{ images.main }}" alt="{{ title }}" loading="lazy"></div>
-  {% endif %}
-  <h1>{{ title | title }}</h1>
-  <div class="recipe-meta">
-    {% if recipe and recipe.metadata %}
-      {% set prepTime = recipe.metadata["time.prep"] %}
-      {% set cookTime = recipe.metadata["time.cook"] %}
-      {% if prepTime or cookTime %}
-        <span class="recipe-time">
-          {% if prepTime %}
-            {{ prepTime }} min prep{% endif %}
-          {% if prepTime and cookTime %}
-            &
-          {% endif %}
-          {% if cookTime %}
-            {{ cookTime }} min cook{% endif %}
-        </span>
-      {% endif %}
-    {% endif %}
+    {% recipeImage images.main, title, "(min-width: 900px) 800px, 100vw", "recipe-main-image__img" %}
   </div>
-  <div class="tags">
-    {% for tag in tags -%}
-      {% set tagUrl %}/tags/{{ tag }}/{% endset %}
-      <a href="{{ tagUrl | url }}">#{{ tag }}</a>
-    {%- endfor %}
-  </div>
-  {% if subtitle %}
-    <div class="recipe-subtitle">
-      {{ subtitle }}
-    </div>
-  {% endif %}
-  <section class="recipe-ingredients">
-    <h2>Ingredients</h2>
-    <ul>
-      {% for item in ingredients %}
-        {# Skip recipe references (ingredients that start with ./ or ../ and end with .cook) #}
-        {% if not ((item.name.startsWith('./') or item.name.startsWith('../')) and item.name.endsWith('.cook')) %}
-          <li>{{ item.quantity }}
-            {{ item.units }}
-            {{ item.name }}</li>
+{% endif %}
+<h1>{{ title | title }}</h1>
+<div class="recipe-meta">
+  {% if recipe and recipe.metadata %}
+    {% set prepTime = recipe.metadata["time.prep"] %}
+    {% set cookTime = recipe.metadata["time.cook"] %}
+    {% if prepTime or cookTime %}
+      <span class="recipe-time">
+        {% if prepTime %}
+          {{ prepTime }} min prep{% endif %}
+        {% if prepTime and cookTime %}
+          &
         {% endif %}
-      {% endfor %}
-    </ul>
-  </section>
-  <section class="recipe-cookware">
-    <h2>Cookware</h2>
-    <ul>
-      {% for item in cookware %}
-        <li>{{ item.name }}</li>
-      {% endfor %}
-    </ul>
-  </section>
-  <section class="recipe-instructions">
-    <h2>Instructions</h2>
-    <ol>
-      {% for step in steps %}
-        <li class="recipe-step">
-          <div class="recipe-step-content">
-            {%- for item in step -%}
-              {{ item | safe }}
-            {%- endfor -%}
+        {% if cookTime %}
+          {{ cookTime }} min cook{% endif %}
+      </span>
+    {% endif %}
+  {% endif %}
+  <div class="recipe-actions">
+    {% set cookFilePath = page.inputPath | replace("./src/", "") | replace("src/", "") %}
+    <a href="/{{ cookFilePath }}" download="{{ title | slugify }}.cook" class="download-button">
+      Download .cook file
+    </a>
+  </div>
+</div>
+<div class="tags">
+  {% for tag in tags -%}
+    {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+    <a href="{{ tagUrl | url }}">#{{ tag }}</a>
+  {%- endfor %}
+</div>
+{% if subtitle %}
+  <div class="recipe-subtitle">
+    {{ subtitle }}
+  </div>
+{% endif %}
+<section class="recipe-ingredients">
+  <h2>Ingredients</h2>
+  <ul>
+    {% for item in ingredients %}
+      {# Skip recipe references (ingredients that start with ./ or ../ and end with .cook) #}
+      {% if not ((item.name.startsWith('./') or item.name.startsWith('../')) and item.name.endsWith('.cook')) %}
+        <li>{{ item.quantity }}
+          {{ item.units }}
+          {{ item.name }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</section>
+<section class="recipe-cookware">
+  <h2>Cookware</h2>
+  <ul>
+    {% for item in cookware %}
+      <li>{{ item.name }}</li>
+    {% endfor %}
+  </ul>
+</section>
+<section class="recipe-instructions">
+  <h2>Instructions</h2>
+  <ol>
+    {% for step in steps %}
+      <li class="recipe-step">
+        <div class="recipe-step-content">
+          {%- for item in step -%}
+            {{ item | safe }}
+          {%- endfor -%}
+        </div>
+        {% if images.steps[loop.index] %}
+          <div class="recipe-step-image">
+            {% recipeImage images.steps[loop.index], "Step " + loop.index, "(min-width: 900px) 800px, 100vw", "recipe-step-image__img" %}
           </div>
-          {% if images.steps[loop.index] %}
-            <div class="recipe-step-image">
-              <img src="../{{ images.steps[loop.index] }}" alt="Step {{ loop.index }}" loading="lazy"></div>
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ol>
-    </section>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</section>

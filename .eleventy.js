@@ -5,6 +5,7 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const eleventyPluginCookLang = require("./plugins/cooklang.js");
 const fs = require("fs");
 const path = require("path");
+const Image = require("@11ty/eleventy-img");
 
 const isDev = process.env.ELEVENTY_ENV === "development";
 const isProd = process.env.ELEVENTY_ENV === "production";
@@ -41,12 +42,70 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.setDataDeepMerge(true);
 
   eleventyConfig.addPassthroughCopy({ "src/images": "images" });
+
   // Copy recipe images (jpg, jpeg, png) from recipe directories
   eleventyConfig.addPassthroughCopy("src/posts/recipes/**/*.jpg");
   eleventyConfig.addPassthroughCopy("src/posts/recipes/**/*.jpeg");
   eleventyConfig.addPassthroughCopy("src/posts/recipes/**/*.png");
 
+  // Copy .cook files so they can be downloaded
+  eleventyConfig.addPassthroughCopy("src/posts/recipes/**/*.cook");
+
   eleventyConfig.setBrowserSyncConfig({ files: [manifestPath] });
+
+  // Responsive images with @11ty/eleventy-img
+  async function imageShortcode(
+    src,
+    alt,
+    sizes = "(min-width: 800px) 720px, 100vw",
+    className = ""
+  ) {
+    if (!alt) {
+      throw new Error(`Missing alt attribute for image: ${src}`);
+    }
+
+    const metadata = await Image(src, {
+      widths: [320, 640, 960, 1280, 1600],
+      formats: ["avif", "webp", "jpeg"],
+      outputDir: "./public/images/optimized",
+      urlPath: "/images/optimized",
+    });
+
+    const imageAttributes = {
+      alt,
+      sizes,
+      loading: "lazy",
+      decoding: "async",
+    };
+    if (className) imageAttributes.class = className;
+
+    return Image.generateHTML(metadata, imageAttributes, {
+      whitespaceMode: "inline",
+    });
+  }
+
+  // Generic image shortcode (absolute or relative to project root)
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+
+  // Recipe image shortcode resolves filenames relative to current .cook file directory
+  eleventyConfig.addNunjucksAsyncShortcode(
+    "recipeImage",
+    async function (
+      fileName,
+      alt,
+      sizes = "(min-width: 800px) 720px, 100vw",
+      className = ""
+    ) {
+      const currentDir = path.dirname(this.page.inputPath);
+      const absoluteSrc = path.join(currentDir, fileName);
+      return imageShortcode(
+        absoluteSrc,
+        alt,
+        sizes,
+        className || "recipe-image"
+      );
+    }
+  );
 
   eleventyConfig.addShortcode("bundledcss", function () {
     return manifest["main.css"]
