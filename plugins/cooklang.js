@@ -32,6 +32,15 @@ function findRecipeImages(inputPath) {
   // Supported image extensions
   const imageExtensions = [".jpg", ".jpeg", ".png"];
 
+  // Normalize strings for robust, cross-platform filename comparisons
+  function normalizeForCompare(str) {
+    return (str || "").normalize("NFC").toLowerCase();
+  }
+
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
   try {
     const files = fs.readdirSync(dir);
 
@@ -41,17 +50,18 @@ function findRecipeImages(inputPath) {
 
       const fileBaseName = path.basename(file, ext);
 
-      // Check for main recipe image (exact match)
-      if (fileBaseName === baseName) {
+      const normalizedBaseName = normalizeForCompare(baseName);
+      const normalizedFileBaseName = normalizeForCompare(fileBaseName);
+
+      // Check for main recipe image (case and unicode-insensitive)
+      if (normalizedFileBaseName === normalizedBaseName) {
         images.main = file;
         continue;
       }
 
       // Check for step-specific images (baseName.stepNumber.ext)
-      const stepMatch = fileBaseName.match(
-        new RegExp(
-          `^${baseName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\.(\\d+)$`
-        )
+      const stepMatch = normalizedFileBaseName.match(
+        new RegExp(`^${escapeRegex(normalizedBaseName)}\\.(\\d+)$`)
       );
       if (stepMatch) {
         const stepNumber = parseInt(stepMatch[1]);

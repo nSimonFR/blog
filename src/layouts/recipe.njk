@@ -6,7 +6,7 @@ pageCss: recipe
 
 {% if images.main %}
   <div class="recipe-main-image">
-    <img src="../{{ images.main }}" alt="{{ title }}" loading="lazy"></div>
+    <img src="../{{ images.main | encodeSpaces }}" alt="{{ title }}" loading="lazy"></div>
   {% endif %}
   <h1>{{ title | title }}</h1>
   <div class="recipe-meta">
@@ -78,7 +78,7 @@ pageCss: recipe
           </div>
           {% if images.steps[loop.index] %}
             <div class="recipe-step-image">
-              <img src="../{{ images.steps[loop.index] }}" alt="Step {{ loop.index }}" loading="lazy"></div>
+              <img src="../{{ images.steps[loop.index] | encodeSpaces }}" alt="Step {{ loop.index }}" loading="lazy"></div>
             {% endif %}
           </li>
         {% endfor %}
