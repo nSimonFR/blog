@@ -9,7 +9,8 @@ const os = require("os");
  * Syncs recipes from recipes folder to iCloud CookLang app directory
  */
 
-const sourceDir = path.join(__dirname, "src", "posts", "recipes");
+const projectRoot = path.resolve(__dirname, "..");
+const sourceDir = path.join(projectRoot, "src", "posts", "recipes");
 const targetDir = path.join(
   os.homedir(),
   "Library",

@@ -39,6 +39,6 @@
     "prebuild:dates": "node scripts/generate-file-dates.js",
     "build:site": "env ELEVENTY_ENV=production eleventy",
     "clean": "rm -rf ./public",
-    "icloud:push": "node icloud-push.js"
+    "icloud:push": "node scripts/icloud-push.js"
   }
 }
