@@ -32,10 +32,11 @@
   "scripts": {
     "dev": "run-p dev:*",
     "start": "eleventy --serve",
-    "build": "run-s clean build:assets build:site",
+    "build": "run-s clean build:assets prebuild:dates build:site",
     "dev:assets": "env ELEVENTY_ENV=development webpack --mode production --watch",
     "dev:site": "env ELEVENTY_ENV=development eleventy --serve",
     "build:assets": "webpack --mode production",
+    "prebuild:dates": "node scripts/generate-file-dates.js",
     "build:site": "env ELEVENTY_ENV=production eleventy",
     "clean": "rm -rf ./public",
     "icloud:push": "node icloud-push.js"
