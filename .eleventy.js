@@ -50,6 +50,20 @@ function ensureFullGitHistory() {
   } catch {}
 }
 
+function getGitLastModifiedIsoForFile(inputPath) {
+  try {
+    const iso = execSync(
+      `git log --follow --format=%aI -1 -- ${JSON.stringify(inputPath)}`,
+      { encoding: "utf-8" }
+    )
+      .toString()
+      .trim();
+    return iso || null;
+  } catch (e) {
+    return null;
+  }
+}
+
 function getGitCreatedIsoForFile(inputPath) {
   try {
     const iso = execSync(
@@ -86,7 +100,35 @@ module.exports = function (eleventyConfig) {
   // Global computed data: unify date computation for all content
   eleventyConfig.addGlobalData("eleventyComputed", {
     date: (data) => {
-      if (data.date) return data.date;
+      if (data.date) {
+        const requestedDate = data.date;
+        // Interpret special tokens from frontmatter like "git Last Modified" or "git Created"
+        if (typeof requestedDate === "string") {
+          const token = requestedDate.trim().toLowerCase();
+          const inputPath = data?.page?.inputPath;
+          if (inputPath) {
+            ensureFullGitHistory();
+            if (
+              token === "git last modified" ||
+              token === "git last-modified" ||
+              token === "git modified"
+            ) {
+              const iso = getGitLastModifiedIsoForFile(inputPath);
+              if (iso) return new Date(iso);
+            }
+            if (token === "git created" || token === "git first commit") {
+              const iso = getGitCreatedIsoForFile(inputPath);
+              if (iso) return new Date(iso);
+            }
+          }
+          // If it's not a recognized token, try to parse as date string
+          const parsed = new Date(requestedDate);
+          if (!isNaN(parsed)) return parsed;
+        }
+        // If a Date object was provided, use it as-is
+        if (requestedDate instanceof Date) return requestedDate;
+        // Fall through to default computation below
+      }
 
       const inputPath = data?.page?.inputPath;
       if (!inputPath) return data.page?.date;
@@ -104,17 +146,15 @@ module.exports = function (eleventyConfig) {
         }
       } catch {}
 
-      // 1) Try Git first commit date
+      // 1) Prefer Git last modified date
       ensureFullGitHistory();
-      const gitIso = getGitCreatedIsoForFile(inputPath);
+      const gitIso = getGitLastModifiedIsoForFile(inputPath);
       if (gitIso) return new Date(gitIso);
 
-      // 2) Fallback to filesystem birthtime/mtime
+      // 2) Fallback to filesystem mtime (last modified)
       try {
         const stat = fs.statSync(inputPath);
-        return stat.birthtimeMs
-          ? new Date(stat.birthtimeMs)
-          : new Date(stat.mtimeMs);
+        return new Date(stat.mtimeMs);
       } catch (e) {
         // 3) Final fallback to Eleventy default
         return data.page?.date;

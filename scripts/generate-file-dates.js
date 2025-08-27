@@ -3,12 +3,10 @@ const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-function getGitCreatedIso(filePath) {
+function getGitLastModifiedIso(filePath) {
   try {
     const iso = execSync(
-      `git log --diff-filter=A --follow --format=%aI -1 -- ${JSON.stringify(
-        filePath
-      )}`,
+      `git log --follow --format=%aI -1 -- ${JSON.stringify(filePath)}`,
       { encoding: "utf-8" }
     )
       .toString()
@@ -63,7 +61,7 @@ function main() {
 
   const map = {};
   for (const rel of list) {
-    const iso = getGitCreatedIso(rel);
+    const iso = getGitLastModifiedIso(rel);
     if (!iso) continue;
     // Store multiple key variants for resilience
     const dotRel = `./${rel}`;
